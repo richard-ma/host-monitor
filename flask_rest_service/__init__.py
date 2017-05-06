@@ -5,11 +5,11 @@ from flask_pymongo import PyMongo
 from flask import make_response
 from bson.json_util import dumps
 
-MONGO_URL = os.environ.get('MONGO_URL')
+MONGODB_URI = os.environ.get('MONGODB_URI')
 
 app = Flask(__name__)
 
-app.config['MONGO_URI'] = MONGO_URL
+app.config['MONGO_URI'] = MONGODB_URI
 mongo = PyMongo(app)
 
 def output_json(obj, code, headers=None):
