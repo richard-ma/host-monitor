@@ -1,8 +1,8 @@
 import json
 from flask import request, abort
 from flask_restful import Resource, reqparse
-from flask_rest_service import app, api, mongo
 from bson.objectid import ObjectId
+from . import app, api, mongo
 
 class ReadingList(Resource):
     def __init__(self, *args, **kwargs):
