@@ -1,2 +1,2 @@
-from flask_rest_service import app
+from host_monitor import app
 app.run(debug=True)
