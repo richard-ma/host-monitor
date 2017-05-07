@@ -51,7 +51,10 @@ class Host(Resource):
 
 class Root(Resource):
     def get(self):
-        return {'status': 'OK'}
+        return {
+                'status': 'OK',
+                'client_ip': helper.get_client_ip(request)
+                }
 
 api.add_resource(Root, '/')
 api.add_resource(HostList, '/hosts/')
