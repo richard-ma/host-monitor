@@ -4,31 +4,31 @@ from flask_restful import Resource, reqparse
 from bson.objectid import ObjectId
 from . import app, api, mongo
 
-class ReadingList(Resource):
+class HostList(Resource):
     def __init__(self, *args, **kwargs):
         self.parser = reqparse.RequestParser()
-        self.parser.add_argument('reading', type=str)
-        super(ReadingList, self).__init__()
+        self.parser.add_argument('host', type=str)
+        super(HostList, self).__init__()
 
     def get(self):
-        return [x for x in mongo.db.readings.find()]
+        return [x for x in mongo.db.hosts.find()]
 
     def post(self):
         args = self.parser.parse_args()
-        if not args['reading']:
+        if not args['host']:
             abort(400)
 
-        jo = json.loads(args['reading'])
-        reading_id = mongo.db.readings.insert(jo)
-        return monngo.db.readings.find_one({"_id": reading_id})
+        jo = json.loads(args['host'])
+        host_id = mongo.db.hosts.insert(jo)
+        return monngo.db.hosts.find_one({"_id": host_id})
 
-class Reading(Resource):
-    def get(self, reading_id):
-        return mongo.db.readings.find_one_or_404({"_id": reading_id})
+class Host(Resource):
+    def get(self, host_id):
+        return mongo.db.hosts.find_one_or_404({"_id": host_id})
 
-    def delete(self, reading_id):
-        mongo.db.readings.find_one_or_404({"_id": reading_id})
-        mongo.db.readings.remove({"_id": reading_id})
+    def delete(self, host_id):
+        mongo.db.hosts.find_one_or_404({"_id": host_id})
+        mongo.db.hosts.remove({"_id": host_id})
         return '', 204
 
 class Root(Resource):
@@ -39,5 +39,5 @@ class Root(Resource):
                 }
 
 api.add_resource(Root, '/')
-api.add_resource(ReadingList, '/readings/')
-api.add_resource(Reading, '/readings/<ObjectId:reading_id>')
+api.add_resource(HostList, '/hosts/')
+api.add_resource(Host, '/hosts/<ObjectId:host_id>')
