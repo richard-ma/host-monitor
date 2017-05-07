@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import request, abort
 from flask_restful import Resource, reqparse
 from bson.objectid import ObjectId
-from . import app, api, mongo
+from . import app, api, mongo, helper
 
 class HostList(Resource):
     def __init__(self, *args, **kwargs):
