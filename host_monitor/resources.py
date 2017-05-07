@@ -4,6 +4,7 @@ from flask import request, abort
 from flask_restful import Resource, reqparse
 from bson.objectid import ObjectId
 from . import app, api, mongo
+from ./helper import get_client_ip
 
 class HostList(Resource):
     def __init__(self, *args, **kwargs):
@@ -22,7 +23,7 @@ class HostList(Resource):
 
         host = dict()
         host['name'] = args['host']
-        host['ip'] = request.remote_addr
+        host['ip'] = get_client_ip(request)
         host['last_update'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         host_id = mongo.db.hosts.insert_one(host).inserted_id
@@ -37,7 +38,7 @@ class Host(Resource):
 
         host = dict()
         host['name'] = host_name
-        host['ip'] = request.remote_addr
+        host['ip'] = get_client_ip(request)
         host['last_update'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         mongo.db.hosts.update_one({"name": host_name}, {"$set": host})
