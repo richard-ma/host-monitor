@@ -8,7 +8,6 @@ def get_client_ip(request):
 
     if on_heroku():
         header = request.headers.get('X-Forwarded-For')
-        ip = header
-        #ip = header.split(',')[-1]
+        ip = header.split(',')[-1].strip(' ')
 
     return ip
