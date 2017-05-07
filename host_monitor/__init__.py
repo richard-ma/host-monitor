@@ -22,3 +22,4 @@ api = Api(app)
 api.representations = DEFAULT_REPRESENTATIONS
 
 from . import resources
+from . import helper
